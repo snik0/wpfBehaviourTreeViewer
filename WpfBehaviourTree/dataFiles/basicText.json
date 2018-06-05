@@ -1,0 +1,22 @@
+{
+	"type": "RepeatUntilFail",
+	"children": [
+		{
+			"type": "Selector",
+			"children": [
+				{
+					"type": "leaf0",
+					"children": []
+				},
+				{
+					"type": "leaf1",
+					"children": []
+				},
+				{
+					"type": "leaf2",
+					"children": []
+				}
+			]
+		}
+	]
+}
