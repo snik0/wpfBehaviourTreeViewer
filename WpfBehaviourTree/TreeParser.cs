@@ -8,7 +8,7 @@ namespace WpfBehaviourTree
     // class provides basic json parsing and generates TreeNodes from them
     static class TreeParser
     {
-        public static void Parse(string in_json)
+        public static TreeNode Parse(string in_json)
         {
             JObject template = JObject.Parse(in_json);
             try
@@ -16,12 +16,14 @@ namespace WpfBehaviourTree
                 JsonSerializer serializer = new JsonSerializer();
                 var node = (TreeNode)serializer.Deserialize(new JTokenReader(template), typeof(TreeNode));
 
-                Console.WriteLine(node.type);
+                return node;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.ToString());
             }
+
+            return null;
         }
     }
 }

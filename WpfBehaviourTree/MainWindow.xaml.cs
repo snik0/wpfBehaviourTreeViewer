@@ -14,8 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-
+using WpfBehaviourTree.src;
 
 namespace WpfBehaviourTree
 {
@@ -24,8 +23,7 @@ namespace WpfBehaviourTree
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        
+    {        
         public MainWindow()
         {
             InitializeComponent();
@@ -35,9 +33,8 @@ namespace WpfBehaviourTree
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             
-            // Set filter for file extension and default file extension 
-            //dlg.DefaultExt = ".";
-            //dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            dlg.DefaultExt = ".json";
+            dlg.Filter = "JSON Files (*.json)|*.json|TXT Files (*.txt)|*.txt";
 
             // display
             var result = dlg.ShowDialog();
@@ -47,24 +44,30 @@ namespace WpfBehaviourTree
                 // Open document 
                 string filename = dlg.FileName;
 
-                string fileContent = ReadFile(filename);
+                TreeNode rootNode = ReadRootNode(filename);
 
-                MainWindowTitle.Title = System.IO.Path.GetFileName(filename);
+                ui_mainWindowTitle.Title = System.IO.Path.GetFileName(filename);
+
+                if (rootNode != null)
+                {
+                    // not found a classier way of displaying the root node as items source needs an ienumerable
+                    List<TreeNode> rootContainer = new List<TreeNode>(1);
+                    rootContainer.Add(rootNode);
+                    ui_treeView.ItemsSource = rootContainer;
+                }
             }
         }
 
-        private string ReadFile(string in_filename)
+        private TreeNode ReadRootNode(string in_filename)
         {
-            string content = string.Empty;
-
             try
             {
                 using (StreamReader reader = new StreamReader(in_filename))
                 {
-                    content = reader.ReadToEnd();
+                    string content = reader.ReadToEnd();
                     Console.WriteLine(content);
 
-                    TreeParser.Parse(content);                   
+                    return TreeParser.Parse(content);                    
                 }
             }
             catch (Exception e)
@@ -72,7 +75,8 @@ namespace WpfBehaviourTree
                 Console.WriteLine("[Error] Reading file: " + e.Message);
             }
 
-            return content;
+            return null;
         }
+        
     }
 }
