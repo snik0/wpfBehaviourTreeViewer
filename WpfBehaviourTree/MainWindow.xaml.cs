@@ -29,6 +29,8 @@ namespace WpfBehaviourTree
             InitializeComponent();
         }
 
+        internal TreeNode RootTreeNode { get; set; }
+
         private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -44,17 +46,20 @@ namespace WpfBehaviourTree
                 // Open document 
                 string filename = dlg.FileName;
 
-                TreeNode rootNode = ReadRootNode(filename);
+                RootTreeNode = ReadRootNode(filename);
 
                 ui_mainWindowTitle.Title = System.IO.Path.GetFileName(filename);
 
-                if (rootNode != null)
+                if (RootTreeNode != null)
                 {
                     // not found a classier way of displaying the root node as items source needs an ienumerable
                     List<TreeNode> rootContainer = new List<TreeNode>(1);
-                    rootContainer.Add(rootNode);
+                    rootContainer.Add(RootTreeNode);
                     ui_treeView.ItemsSource = rootContainer;
                 }
+
+                // build the 3d graph
+                ui_treeRenderer.BuildTreeMesh();
             }
         }
 

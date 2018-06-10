@@ -35,7 +35,7 @@
                     </TabItem>
                     <TabItem Header="3D View">
                         <Grid Background="#FFE5E5E5">
-                            <viewport3d:Viewport3dTreeRenderer/>
+                            <viewport3d:Viewport3dTreeRenderer x:Name="ui_treeRenderer"/>
                         </Grid>
                     </TabItem>
                 </TabControl>

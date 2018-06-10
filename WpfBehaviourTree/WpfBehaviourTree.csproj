@@ -63,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="src\TreeNode.cs" />
+    <Compile Include="src\ui\TreeMeshGenerator.cs" />
     <Compile Include="src\ui\Viewport3dTreeRenderer.xaml.cs">
       <DependentUpon>Viewport3dTreeRenderer.xaml</DependentUpon>
     </Compile>
