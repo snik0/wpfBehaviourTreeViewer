@@ -10,7 +10,7 @@
         x:Class="WpfBehaviourTree.MainWindow"
         x:Name="ui_mainWindowTitle"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="380.027" Width="513.74">
     <Grid>
 
         <DockPanel>
@@ -21,12 +21,12 @@
             </Menu>
 
             <StackPanel>
-                <TabControl x:Name="tabControl" Height="300" Width="493">
+                <TabControl x:Name="tabControl" Margin="5,5,5,0" Height="318">
                     <TabItem Header="Tree View">
                         <Grid Background="#FFE5E5E5">
-                            <TreeView x:Name="ui_treeView" ItemsSource="{Binding children}" Margin="10,0,0,0">
+                            <TreeView x:Name="ui_treeView"  Margin="10,5,299,5">
                                 <TreeView.ItemTemplate>
-                                    <HierarchicalDataTemplate ItemsSource="{Binding children}" DataType="{x:Type src:TreeNode}">
+                                    <HierarchicalDataTemplate ItemsSource="{Binding children}">
                                         <TreeViewItem Header="{Binding type}"/>
                                     </HierarchicalDataTemplate>
                                 </TreeView.ItemTemplate>
@@ -37,7 +37,7 @@
                         <Grid Background="#FFE5E5E5">
                             <viewport3d:Viewport3dTreeRenderer x:Name="ui_treeRenderer"/>
                         </Grid>
-                    </TabItem>
+                    </TabItem>                        
                 </TabControl>
             </StackPanel>
         </DockPanel>

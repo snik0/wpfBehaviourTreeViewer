@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -88,47 +86,8 @@ namespace WpfBehaviourTree.src.ui
         {
             return CreateTextLabel3D(in_text, in_textColor, in_height, in_centerPoint, new Vector3D(1, 0, 0), new Vector3D(0, 1, 0));
         }
-
-        public static ModelVisual3D CreateCubeMesh3D(Point3D in_centerPoint, double in_size)
-        {
-            DiffuseMaterial mat = new DiffuseMaterial(new SolidColorBrush(Colors.White));
-
-            MeshGeometry3D mg = new MeshGeometry3D();
-            mg.Positions = new Point3DCollection();
-            mg.Positions.Add(new Point3D(-in_size + in_centerPoint.X, -in_size + in_centerPoint.Y, in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(in_size + in_centerPoint.X, -in_size + in_centerPoint.Y, in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(in_size + in_centerPoint.X, in_size + in_centerPoint.Y, in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(-in_size + in_centerPoint.X, in_size + in_centerPoint.Y, in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(-in_size + in_centerPoint.X, -in_size + in_centerPoint.Y, -in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(in_size + in_centerPoint.X, -in_size + in_centerPoint.Y, -in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(in_size + in_centerPoint.X, in_size + in_centerPoint.Y, -in_size + in_centerPoint.Z));
-            mg.Positions.Add(new Point3D(-in_size + in_centerPoint.X, in_size + in_centerPoint.Y, -in_size + in_centerPoint.Z));
-
-            mg.TriangleIndices.Add(0); mg.TriangleIndices.Add(1); mg.TriangleIndices.Add(2);
-            mg.TriangleIndices.Add(2); mg.TriangleIndices.Add(3); mg.TriangleIndices.Add(0);
-            mg.TriangleIndices.Add(1); mg.TriangleIndices.Add(5); mg.TriangleIndices.Add(6);
-            mg.TriangleIndices.Add(6); mg.TriangleIndices.Add(2); mg.TriangleIndices.Add(1);
-            mg.TriangleIndices.Add(7); mg.TriangleIndices.Add(6); mg.TriangleIndices.Add(5);
-            mg.TriangleIndices.Add(5); mg.TriangleIndices.Add(4); mg.TriangleIndices.Add(7);
-            mg.TriangleIndices.Add(4); mg.TriangleIndices.Add(0); mg.TriangleIndices.Add(3);
-            mg.TriangleIndices.Add(3); mg.TriangleIndices.Add(7); mg.TriangleIndices.Add(4);
-            mg.TriangleIndices.Add(4); mg.TriangleIndices.Add(5); mg.TriangleIndices.Add(1);
-            mg.TriangleIndices.Add(1); mg.TriangleIndices.Add(0); mg.TriangleIndices.Add(4);
-            mg.TriangleIndices.Add(3); mg.TriangleIndices.Add(2); mg.TriangleIndices.Add(6);
-            mg.TriangleIndices.Add(6); mg.TriangleIndices.Add(7); mg.TriangleIndices.Add(3);
-            /*
-            mg.TextureCoordinates.Add(new Point(1, 1));
-            mg.TextureCoordinates.Add(new Point(1, 0));
-            mg.TextureCoordinates.Add(new Point(0, 1));
-            mg.TextureCoordinates.Add(new Point(0, 0));*/
-
-            ModelVisual3D mv3d = new ModelVisual3D();
-            mv3d.Content = new GeometryModel3D(mg, mat);
-            return mv3d;
-        }
-
-
-        public static ModelVisual3D TestCreateCubeMesh3D(double in_size)
+        
+        public static ModelVisual3D CreateCubeMesh3D(double in_size)
         {
             DiffuseMaterial mat = new DiffuseMaterial(new SolidColorBrush(Colors.White));
 
@@ -161,7 +120,7 @@ namespace WpfBehaviourTree.src.ui
             return mv3d;
         }
 
-        public static List<ModelVisual3D> BuildModelVisual3DTree(TreeNode in_rootNode, float in_nodeX, float in_nodeY, float in_zPos)
+        public static List<ModelVisual3D> BuildModelVisual3DTree(TreeNode in_rootNode, float in_nodeX, float in_nodeY, float in_zPos, ref float out_maxY)
         {
             var list = new List<ModelVisual3D>();
 
@@ -169,14 +128,13 @@ namespace WpfBehaviourTree.src.ui
                 return list;
 
             // build label and mesh
-            var position = new Point3D(in_nodeX, in_nodeY+0.15f, in_zPos);
+            var position = new Point3D(in_nodeX, in_nodeY + 0.15f, in_zPos);
             float height = 0.06f;
             var labelModel = CreateTextLabel3D(in_rootNode.type, new SolidColorBrush(Colors.Black), height, position);
-
-            //var cube = CreateCubeMesh3D(new Point3D(in_nodeX, in_nodeY, in_zPos), 0.1f);
-            var cube = TestCreateCubeMesh3D( 0.1f);
-
             
+            // build a mesh around origin
+            var cube = CreateCubeMesh3D(0.1f);
+
             cube.Transform = new TranslateTransform3D(new Vector3D(in_nodeX, in_nodeY, in_zPos));
 
             list.Add(labelModel);
@@ -186,16 +144,37 @@ namespace WpfBehaviourTree.src.ui
             if (in_rootNode.children.Count == 0)
                 return list;
 
-            const float k_stepFactor = 0.6f;
-            float childXStep = (0.5f * in_rootNode.children.Count - 0.5f) * k_stepFactor;
-            float childXStart = in_nodeX - childXStep;
-            
+            const float k_stepFactor = 0.3f;
+
+            int grandChildrenCount = 0;
+
+            // rough spacer, should handle per child offset or notify parent of offset required
+            for (int i = 0; i < in_rootNode.children.Count; ++i)
+            {
+                if (in_rootNode.children[i] != null)
+                    grandChildrenCount += in_rootNode.children[i].children.Count;
+            }
+
+            float childXStep = k_stepFactor;
+            float childXStart = in_nodeX - ((in_rootNode.children.Count - 1) * k_stepFactor * 0.5f);            
             float childYStart = in_nodeY - 0.3f;
 
+            int childCount = in_rootNode.children.Count;
+
+            if (childCount > 0)
+                out_maxY = Math.Min(childYStart, out_maxY);
+
             // recurse for children
-            for(int i = 0; i < in_rootNode.children.Count; ++i)
+            for (int i = 0; i < childCount; ++i)
             {
-                list.AddRange(BuildModelVisual3DTree(in_rootNode.children[i], childXStart + (i * childXStep), childYStart, in_zPos));
+                float grandChildModifier = (i >= childCount / 2) ? -1f : 1f;
+                grandChildModifier *= grandChildrenCount * 0.1f;
+                
+                // disregard offsets for single child nodes and center-child nodes
+                if (in_rootNode.children.Count == 1 || (i == childCount / 2 && childCount % 2 == 1))
+                    grandChildModifier = 0f;
+                
+                list.AddRange(BuildModelVisual3DTree(in_rootNode.children[i], childXStart + (i * childXStep) - grandChildModifier, childYStart, in_zPos, ref out_maxY));
             }
             
             return list;

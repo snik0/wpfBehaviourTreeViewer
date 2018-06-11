@@ -8,7 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <Grid>
-
         <Label 
 				HorizontalAlignment="Center" 
 				TextBlock.TextAlignment="Center" 
@@ -20,7 +19,7 @@
         <Viewport3D x:Name="ui_viewport" >
 
             <Viewport3D.Camera>
-                <PerspectiveCamera 
+                <PerspectiveCamera  x:Name="ui_3dCamera"
 						FarPlaneDistance="20" 
 						LookDirection="0,0,-1" 
 						UpDirection="0,1,0" 
@@ -28,23 +27,6 @@
 						Position="0,0,3" 
 						FieldOfView="45" />
             </Viewport3D.Camera>
-
-            <Viewport3D.Children>
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <Model3DGroup >
-                            <Model3DGroup.Children>
-
-                                <DirectionalLight Color="#FFFFFFFF" Direction="3,-4,-5" />
-
-                            </Model3DGroup.Children>
-                        </Model3DGroup>
-
-                    </ModelVisual3D.Content>
-
-                </ModelVisual3D>
-
-            </Viewport3D.Children>
 
         </Viewport3D>
     </Grid>

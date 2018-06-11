@@ -1,0 +1,43 @@
+{
+	"type": "RepeatUntilFail",
+	"children": [{
+			"type": "Selector",
+			"children": [{
+					"type": "leaf0",
+					"children": []
+				},
+				{
+					"type": "leaf1",
+					"children": []
+				},
+				{
+					"type": "leaf2",
+					"children": []
+				}
+			]
+		},
+		{
+			"type": "Invertor",
+			"children": [{
+				"type": "Selector",
+				"children": [{
+						"type": "leaf3",
+						"children": []
+					},
+					{
+						"type": "leaf4",
+						"children": []
+					},
+					{
+						"type": "Succeeder",
+						"children": [
+						{
+							"type": "leaf5",
+							"children": []
+						}]
+					}
+				]
+			}]
+		}
+	]
+}

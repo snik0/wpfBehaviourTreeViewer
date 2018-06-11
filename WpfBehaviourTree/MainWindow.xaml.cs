@@ -59,7 +59,11 @@ namespace WpfBehaviourTree
                 }
 
                 // build the 3d graph
-                ui_treeRenderer.BuildTreeMesh();
+                float minY = ui_treeRenderer.BuildTreeMesh();
+
+                // clunky zoom out for now
+                if (minY < -0.6)                
+                    ui_treeRenderer.ui_3dCamera.Position = new System.Windows.Media.Media3D.Point3D(0, 0, 4.5);                
             }
         }
 

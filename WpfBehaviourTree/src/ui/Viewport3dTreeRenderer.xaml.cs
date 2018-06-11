@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfBehaviourTree.src.ui
 {
@@ -29,10 +20,18 @@ namespace WpfBehaviourTree.src.ui
         /// <summary>
         /// Adds ModelVisual3D object to the viewport so it can render. Applies rotation animation if the element isn't a 3d text object.
         /// </summary>
-        internal void BuildTreeMesh()
+        /// <returns>deepest Y value of any child node</returns>
+        internal float BuildTreeMesh()
         {
-            var meshList = TreeMeshGenerator.BuildModelVisual3DTree(((MainWindow)Application.Current.MainWindow).RootTreeNode, 0f, 0.35f, 0f);
+            float minY = 0.35f;
+            var meshList = TreeMeshGenerator.BuildModelVisual3DTree(((MainWindow)Application.Current.MainWindow).RootTreeNode, 0f, minY, 0f, ref minY);
+            
+            ui_viewport.Children.Clear();
 
+            // re-add light as we just burned it            
+            ui_viewport.Children.Add(new ModelVisual3D() { Content = new DirectionalLight(Colors.White, new Vector3D(3, -4, -5)) });
+            
+            // add children to viewport and apply animation
             foreach (var entry in meshList)
             {
                 ui_viewport.Children.Add(entry);
@@ -58,6 +57,8 @@ namespace WpfBehaviourTree.src.ui
                 entry.Transform = transform3DGroup;
                 rotateAxis.BeginAnimation(AxisAngleRotation3D.AngleProperty, angleAnimation);
             }
+
+            return minY;
         }
     }
 }
