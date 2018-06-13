@@ -1,0 +1,21 @@
+﻿<!-- Theme based on the Metro Dark version of the Infragistics Metro Theme -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="d">
+
+    <Color x:Key="Color_000">#FF282828</Color>
+    <Color x:Key="Color_001">#FFFFFFFF</Color>
+    <Color x:Key="Color_002">#FFBABABA</Color>
+    <Color x:Key="Color_003">#FF858585</Color>
+    <Color x:Key="Color_004">#FF747474</Color>
+    <Color x:Key="Color_005">#FF565656</Color>
+    <Color x:Key="Color_006">#FF454545</Color>
+    <Color x:Key="Color_007">#FF333333</Color>
+    <Color x:Key="Color_008">#FF292929</Color>
+    <Color x:Key="Color_009">#FF181818</Color>
+    <Color x:Key="Color_010">#FF00AADE</Color>
+
+</ResourceDictionary>

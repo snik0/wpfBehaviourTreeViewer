@@ -1,0 +1,60 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfBehaviourTree"
+        xmlns:viewport3d="clr-namespace:WpfBehaviourTree.src.ui"
+    
+        x:Class="WpfBehaviourTree.MainWindow"
+        x:Name="ui_mainWindowTitle"
+        Style="{StaticResource StyleWindow}"
+        mc:Ignorable="d"
+        Title="WPF Json Behaviour Tree Viewer" Height="380.027" Width="513.74">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <DockPanel x:Name="ui_paneStart" Visibility="Visible">
+            <Grid Background="#FF555555">
+                <Button x:Name="buttonViewer" Content="Viewer" Height="132" VerticalAlignment="Top" Margin="111,101,265,0" Click="buttonViewer_Click"/>
+                <Button x:Name="buttonCreator" IsEnabled="False" Content="Creator" Height="132" VerticalAlignment="Top" Margin="265,101,111,0" Click="buttonCreator_Click"/>
+            </Grid>
+
+
+        </DockPanel>
+
+        <DockPanel x:Name="ui_paneJsonViewer" Visibility="Hidden">
+            
+
+            <StackPanel>
+                <TabControl x:Name="tabControl" Margin="5,5,5,0" Height="318">
+                    <TabItem Header="Tree View">
+                        <Grid Style="{StaticResource StyleGrid}">
+                            <TreeView x:Name="ui_treeView"  Margin="10,5,178,5" Style="{StaticResource StyleTreeView}">
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate ItemsSource="{Binding children}" >
+                                        <TreeViewItem Header="{Binding type}" Style="{StaticResource StyleTreeViewItem}" />
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                            <Button x:Name="buttonLoadJson" Content="Load File" HorizontalAlignment="Left" Margin="326,5,0,0" VerticalAlignment="Top" Width="98" Click="buttonLoadJson_Click"/>
+                            <Button x:Name="buttonReturn" Content="Back" HorizontalAlignment="Left" Margin="326,57,0,0" VerticalAlignment="Top" Width="98" Click="buttonReturn_Click"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="3D View">
+                        <Grid Background="#FFE5E5E5">
+                            <viewport3d:Viewport3dTreeRenderer x:Name="ui_treeRenderer"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </StackPanel>
+        </DockPanel>
+
+    </Grid>
+</Window>

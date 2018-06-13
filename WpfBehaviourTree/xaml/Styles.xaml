@@ -1,0 +1,153 @@
+﻿<!-- Theme based on the Metro Dark version of the Infragistics Metro Theme -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:tree3d="clr-namespace:WpfBehaviourTree.src.ui"
+                    mc:Ignorable="d">
+
+    <!-- Include resources -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+        <ResourceDictionary Source="Brushes.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+
+    <!-- Window Style -->
+    <Style TargetType="Window" x:Key="StyleWindow">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+    </Style>
+
+
+    <!--  TextBox Style -->
+    <Style  TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Padding" Value="6,3" />
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxFocusedBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid x:Name="RootElement" SnapsToDevicePixels="True">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxHoverBorderBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxHoverBackgroundBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- TreeView Item Style -->
+    <Style TargetType="TreeViewItem" x:Key="StyleTreeViewItem">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+    </Style>
+
+
+    <!-- TreeView Style -->
+    <Style TargetType="TreeView" x:Key="StyleTreeView">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <!-- Tab Control Style -->
+    <Style TargetType="TabControl" >
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+    </Style>
+
+    <!-- Grid Style -->
+    <Style TargetType="Grid" x:Key="StyleGrid">
+        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+    </Style>
+
+
+    <!-- Button Style -->
+    <Style TargetType="Button">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Padding" Value="10,0,10,2" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="MinWidth" Value="30" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonHoverBackgroundBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonHoverBorderBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentControl">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource LightForegroundBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedBackgroundBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedBorderBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentControl">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource LightForegroundBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="Bd" Fill="{StaticResource ButtonBackgroundBrush}" Stroke="{StaticResource ButtonBorderBrush}" StrokeThickness="1" />
+                        <ContentControl x:Name="ContentControl" 
+                                        Foreground="{TemplateBinding Foreground}" 
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                        Margin="{TemplateBinding Padding}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter x:Name="contentPresenter" />
+                        </ContentControl>
+                        <Rectangle x:Name="FocusedVisualElement" Stroke="{StaticResource ButtonPressedBorderBrush}" Visibility="Collapsed" StrokeThickness="2" />
+                        <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource DisabledVisualElement}" Visibility="Collapsed" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

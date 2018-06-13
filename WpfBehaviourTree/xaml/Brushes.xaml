@@ -1,0 +1,36 @@
+﻿<!-- Theme based on the Metro Dark version of the Infragistics Metro Theme -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"                   
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    mc:Ignorable="d">
+
+    <!-- Include colours -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Color_002}" />
+    <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource Color_001}" />
+    <SolidColorBrush x:Key="DisabledVisualElement" Color="{StaticResource Color_009}" Opacity="0.6" />
+
+    <!-- TextBox -->
+    <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="{StaticResource Color_009}" />
+    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource Color_006}" />
+    <SolidColorBrush x:Key="TextBoxHoverBackgroundBrush" Color="{StaticResource Color_008}" />
+    <SolidColorBrush x:Key="TextBoxHoverBorderBrush" Color="{StaticResource Color_004}" />
+    <SolidColorBrush x:Key="TextBoxFocusedBrush" Color="{StaticResource Color_010}" />
+    <SolidColorBrush x:Key="TextBoxReadOnlyBackgroundBrush" Color="{StaticResource Color_007}" />
+
+    <!-- Button -->
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{StaticResource Color_009}" />
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource Color_006}" />
+    <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="{StaticResource Color_006}" />
+    <SolidColorBrush x:Key="ButtonHoverBorderBrush" Color="{StaticResource Color_004}" />
+    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="{StaticResource Color_010}" />
+    <SolidColorBrush x:Key="ButtonPressedBorderBrush" Color="{StaticResource Color_010}" />
+
+</ResourceDictionary>

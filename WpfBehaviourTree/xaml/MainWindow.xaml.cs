@@ -1,46 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfBehaviourTree.src;
 
 namespace WpfBehaviourTree
 {
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {        
+    {
+        internal TreeNode RootTreeNode { get; set; }
+
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        internal TreeNode RootTreeNode { get; set; }
+        private TreeNode ReadRootNode(string in_filename)
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader(in_filename))
+                {
+                    string content = reader.ReadToEnd();
 
-        private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
+                    return TreeParser.Parse(content);                    
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("[Error] Reading file: " + e.Message);
+            }
+
+            return null;
+        }
+
+        private void buttonViewer_Click(object sender, RoutedEventArgs e)
+        {
+            ui_paneStart.Visibility = Visibility.Hidden;
+            ui_paneJsonViewer.Visibility = Visibility.Visible;
+        }
+
+        private void buttonCreator_Click(object sender, RoutedEventArgs e)
+        {
+            //ui_paneStart.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonLoadJson_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            
+
             dlg.DefaultExt = ".json";
             dlg.Filter = "JSON Files (*.json)|*.json|TXT Files (*.txt)|*.txt";
 
             // display
             var result = dlg.ShowDialog();
-            
+
             if (result == true)
             {
                 // Open document 
@@ -62,30 +80,15 @@ namespace WpfBehaviourTree
                 float minY = ui_treeRenderer.BuildTreeMesh();
 
                 // clunky zoom out for now
-                if (minY < -0.6)                
-                    ui_treeRenderer.ui_3dCamera.Position = new System.Windows.Media.Media3D.Point3D(0, 0, 4.5);                
+                if (minY < -0.6)
+                    ui_treeRenderer.ui_3dCamera.Position = new System.Windows.Media.Media3D.Point3D(0, 0, 4.5);
             }
         }
 
-        private TreeNode ReadRootNode(string in_filename)
+        private void buttonReturn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                using (StreamReader reader = new StreamReader(in_filename))
-                {
-                    string content = reader.ReadToEnd();
-                    Console.WriteLine(content);
-
-                    return TreeParser.Parse(content);                    
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("[Error] Reading file: " + e.Message);
-            }
-
-            return null;
+            ui_paneStart.Visibility = Visibility.Visible;
+            ui_paneJsonViewer.Visibility = Visibility.Hidden;
         }
-        
     }
 }
